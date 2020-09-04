@@ -1,17 +1,137 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Tab 1
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 1</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <div class="card">
+					<div class="card-header">
+						<div class="profile_pic">
+							<img src="assets/logo.png">
+						</div>
+					</div>
+					<div class="card-body">
+						<div class="d-lfex justify-content-center flex-column">
+							<div class="name_container">
+								<div class="name">Studio May Ladislau</div>
+                <br>
+                <br>
+							</div>
+						</div>
+					</div>
+				</div> 
+    
+    <ion-button color="dark" expand="full" fill="outline">Alunos</ion-button>
+    
+    <ion-list>
+        <ion-item-sliding *ngFor="let aluno of listaDeAlunos">
+          <ion-item (click)="presentModalAluno(aluno.key, aluno.img, aluno.nome)">
+              <ion-avatar slot="start">
+                <img alt="" src="assets/aluno5.jpg">
+                <!--<img _ngcontent-ngg-c4="" alt="" src="{{aluno.img}}">-->
+              </ion-avatar>
+              <ion-label>
+                <h2>{{aluno.nome}}</h2>
+                <!--<h3>5 meses</h3>-->
+                <p>{{aluno.objetivo}}</p>
+              </ion-label>
+            </ion-item>
+          <ion-item-options>
+            <button class="bgMedidas"ion-button  icon-start (click)="presentModalAvaliacao(aluno.key)">
+              <ion-icon name="create"></ion-icon>
+              Medidas
+            </button>
 
-  <app-explore-container name="Tab 1 page"></app-explore-container>
+            <button class="bgTreino"ion-button icon-start (click)="presentModalTreino(aluno.key)">
+              <ion-icon name="barbell-outline"></ion-icon>
+              Treino
+            </button>
+
+          </ion-item-options>
+        </ion-item-sliding>
+        <!--mock-->
+        <ion-item-sliding>
+          <ion-item (click)="presentModalAluno(aluno.key, aluno.img, aluno.nome)">
+              <ion-avatar slot="start">
+                <img alt="" src="assets/aluno5.jpg">
+                <!--<img _ngcontent-ngg-c4="" alt="" src="{{aluno.img}}">-->
+              </ion-avatar>
+              <ion-label>
+                <h2>Rodrigo Lima</h2>
+                <!--<h3>5 meses</h3>-->
+                <p>Ganhar massa muscular</p>
+              </ion-label>
+            </ion-item>
+          <ion-item-options>
+            <button ion-button color="primary" icon-start (click)="openAvaliacao(aluno.key)">
+              <ion-icon name="create"></ion-icon>
+              avaliação
+            </button>
+          </ion-item-options>
+        </ion-item-sliding>
+
+        <ion-item-sliding>
+          <ion-item (click)="presentModalAluno(aluno.key, aluno.img, aluno.nome)">
+              <ion-avatar slot="start">
+                <img alt="" src="assets/aluno5.jpg">
+                <!--<img _ngcontent-ngg-c4="" alt="" src="{{aluno.img}}">-->
+              </ion-avatar>
+              <ion-label>
+                <h2>Maria Juana</h2>
+                <!--<h3>5 meses</h3>-->
+                <p>Perder peso</p>
+              </ion-label>
+            </ion-item>
+          <ion-item-options>
+            <button ion-button color="primary" icon-start (click)="openAvaliacao(aluno.key)">
+              <ion-icon name="create"></ion-icon>
+              avaliação
+            </button>
+          </ion-item-options>
+        </ion-item-sliding>
+
+        <ion-item-sliding>
+          <ion-item >
+              <ion-avatar slot="start">
+                <img alt="" src="assets/aluno5.jpg">
+                <!--<img _ngcontent-ngg-c4="" alt="" src="{{aluno.img}}">-->
+              </ion-avatar>
+              <ion-label>
+                <h2>Jonh Do</h2>
+                <!--<h3>5 meses</h3>-->
+                <p>Manter boa forma</p>
+              </ion-label>
+            </ion-item>
+          <ion-item-options>
+            <button ion-button color="primary" icon-start (click)="openAvaliacao(aluno.key)">
+              <ion-icon name="create"></ion-icon>
+              avaliação
+            </button>
+          </ion-item-options>
+        </ion-item-sliding>
+
+        <ion-item-sliding>
+          <ion-item >
+              <ion-avatar slot="start">
+                <img alt="" src="assets/aluno5.jpg">
+                <!--<img _ngcontent-ngg-c4="" alt="" src="{{aluno.img}}">-->
+              </ion-avatar>
+              <ion-label>
+                <h2>Jon Stark</h2>
+                <!--<h3>5 meses</h3>-->
+                <p>Ganhar massa muscular</p>
+              </ion-label>
+            </ion-item>
+          <ion-item-options>
+            <button ion-button color="primary" icon-start (click)="openAvaliacao(aluno.key)">
+              <ion-icon name="create"></ion-icon>
+              avaliação
+            </button>
+          </ion-item-options>
+        </ion-item-sliding>
+
+      </ion-list>   
+    <!-- fab placed to the top end -->
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed" >
+      <ion-fab-button (click)="presentModalRegistroAluno()">
+        <ion-icon name="add"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+
 </ion-content>

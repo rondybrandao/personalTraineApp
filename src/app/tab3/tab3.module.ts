@@ -8,6 +8,9 @@ import { ExploreContainerComponentModule } from '../explore-container/explore-co
 
 import { Tab3PageRoutingModule } from './tab3-routing.module'
 
+import {MatButtonModule} from '@angular/material/button';
+
+
 @NgModule({
   imports: [
     IonicModule,
@@ -16,6 +19,7 @@ import { Tab3PageRoutingModule } from './tab3-routing.module'
     ExploreContainerComponentModule,
     RouterModule.forChild([{ path: '', component: Tab3Page }]),
     Tab3PageRoutingModule,
+    MatButtonModule,
   ],
   declarations: [Tab3Page]
 })

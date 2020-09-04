@@ -1,0 +1,186 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start" (click)="dismiss()">
+      <ion-icon size="large" name="arrow-back"></ion-icon>
+    </ion-buttons>
+    <ion-title>Registro das Avaliações</ion-title>
+  </ion-toolbar>
+</ion-header>
+<!--<ion-segment [(ngModel)]="category" (ionChange)="segmentChanged($event)"  color="secondary">
+  <ion-segment-button value="treino" checked>
+    <ion-label>Treino</ion-label>
+  </ion-segment-button>
+  <ion-segment-button value="medidas">
+    <ion-label>Medidas</ion-label>
+  </ion-segment-button>
+</ion-segment>-->
+<ion-content padding>
+  <div [ngSwitch]="category">
+  <form #form="ngForm" (ngSubmit)="registrarAvaliacao(form)" >
+        <ion-list lines="full">
+         
+          <ion-item>
+            <ion-label position="stacked">Altura (m)</ion-label>
+            <ion-input name="nome" required type="text" ngModel required></ion-input>
+          </ion-item>
+          
+          <ion-item>
+            <ion-label position="stacked">Peso (kg) <ion-text color="danger">*</ion-text></ion-label>
+            <ion-input name="peso" required type="number" ngModel required></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">Busto (cm)</ion-label>
+            <ion-textarea name="busto" type="number" required ngModel required></ion-textarea>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">Abdômen (cm)</ion-label>
+            <ion-textarea name="abdomen" type="number" required ngModel required></ion-textarea>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">Cintura (cm)</ion-label>
+            <ion-textarea name="cintura" type="number" required ngModel required></ion-textarea>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">Quadril (cm)</ion-label>
+            <ion-textarea name="quadril" type="number" required ngModel required></ion-textarea>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">Braço direito (cm)</ion-label>
+            <ion-textarea name="braco-direito" type="number" required ngModel required></ion-textarea>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">Braço esquerdo (cm)</ion-label>
+            <ion-textarea name="braco-esquerdo" type="number" required ngModel required></ion-textarea>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">Antebraço direito (cm)</ion-label>
+            <ion-textarea name="antebraco-direito" type="number" required ngModel required></ion-textarea>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">Antebraço esquerdo (cm)</ion-label>
+            <ion-textarea name="antebraco-esquerdo" type="number" required ngModel required></ion-textarea>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">Coxa direita (cm)</ion-label>
+            <ion-textarea name="coxa-direita" type="number" required ngModel required></ion-textarea>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">Coxa esquerda (cm)</ion-label>
+            <ion-textarea name="coxa-esquerda" type="number" required ngModel required></ion-textarea>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">Panturrilha direita (cm)</ion-label>
+            <ion-textarea name="panturrilha-direita" type="number" required ngModel required></ion-textarea>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">Panturrilha esquerda (cm)</ion-label>
+            <ion-textarea name="panturrilha-esquerda" type="number" required ngModel required></ion-textarea>
+          </ion-item>
+
+          <ion-button expand="full" fill="outline">Dobras Cutanêas</ion-button>
+
+          <ion-item>
+            <ion-label position="stacked">Peitoral</ion-label>
+            <ion-textarea name="peitoral" type="number" required ngModel required></ion-textarea>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">Suprailíaco</ion-label>
+            <ion-textarea name="suprailiaco" type="number" required ngModel required></ion-textarea>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">Subescapular</ion-label>
+            <ion-textarea name="subescapular" type="number" required ngModel required></ion-textarea>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">Meio axila</ion-label>
+            <ion-textarea name="meio-axila" type="number" required ngModel required></ion-textarea>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">Bíceps</ion-label>
+            <ion-textarea name="biceps" type="number" required ngModel required></ion-textarea>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">Tríceps</ion-label>
+            <ion-textarea name="triceps" type="number" required ngModel required></ion-textarea>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">Abdominal</ion-label>
+            <ion-textarea name="abdominal" type="number" required ngModel required></ion-textarea>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">Coxa</ion-label>
+            <ion-textarea name="coxa" type="number" required ngModel required></ion-textarea>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">Panturrilha</ion-label>
+            <ion-textarea name="panturrilha" type="number" required ngModel required></ion-textarea>
+          </ion-item>
+        </ion-list>
+      
+        <div class="ion-padding">
+          <ion-button type="submit" expand="block" class="ion-no-margin">Enviar Avaliação</ion-button>
+        </div>
+      </form>
+
+      <!--FORM TREINO-->
+      <!--<form #form="ngForm" (ngSubmit)="registrarAvaliacaoTreino(form)" *ngSwitchCase="'treino'">
+        
+        <ion-list lines="full">
+          
+          <ion-item>
+            <ion-label position="stacked">Braço</ion-label>
+            <ion-input name="braco" required type="number" ngModel required></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">Costa</ion-label>
+            <ion-input name="costa" required type="number" ngModel required></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">Abdomen</ion-label>
+            <ion-input name="abdomen" required type="number" ngModel required></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">Gluteo</ion-label>
+            <ion-input name="gluteo" required type="number" ngModel required></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">Perna</ion-label>
+            <ion-input name="perna" required type="number" ngModel required></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">Cardio</ion-label>
+            <ion-input name="cardio" required type="number" ngModel required></ion-input>
+          </ion-item>
+
+        </ion-list>
+        <div class="ion-padding">
+          <ion-button type="submit" expand="block" class="ion-no-margin">Enviar Avaliação</ion-button>
+        </div>
+      </form>-->
+  </div>
+</ion-content>

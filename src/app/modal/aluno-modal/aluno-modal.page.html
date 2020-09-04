@@ -1,0 +1,444 @@
+<!--<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start" (click)="dismiss()">
+        <ion-icon size="large" name=" X "></ion-icon>
+      </ion-buttons>
+      <ion-title>{{nome}}</ion-title>
+  </ion-toolbar>
+</ion-header>-->
+
+<ion-content>
+  <div class="row">
+    
+		  <div class="col-lg-3 col-sm-6">
+            <div class="card hovercard">
+                <div class="cardheader">
+                  <ion-buttons slot="start" (click)="dismiss()">
+                    <div class="dismiss">X</div>
+                  </ion-buttons>
+                </div>
+                <div class="avatar">
+                    <img alt="" src="assets/aluno5.jpg">
+                </div>
+                <div class="info">
+                    <div class="title">
+                        <a target="_blank">{{nomeDoAluno}}</a>
+                    </div>
+                    <div class="desc">{{ocupacao}}</div>
+                    <div class="desc">30 anos</div>
+                </div>
+            </div>
+        </div>
+	</div>
+    
+    <ion-row class="peso-altura">
+      <ion-col class="altura">
+        <div class="img-icon-peso">
+            <img src="assets/icon/height.png">
+        </div>
+         <ion-label>1,65 m</ion-label>
+      </ion-col>
+      <ion-col>
+        <div class="img-icon-peso"> 
+          <img src="assets/icon/bathroom-scale.png">
+        </div>
+        <ion-input class="peso" readonly [(ngModel)]="pesoData"></ion-input>
+      </ion-col>
+      <ion-col >
+        <h5 id="IMC">IMC</h5>
+        <ion-input class="imc" readonly [(ngModel)]="IMC"></ion-input>
+      </ion-col>
+      <ion-col>
+        <div class="img-icon-peso"> 
+          <img src="assets/icon/fat.png">
+        </div>
+        <ion-input class="gordura" readonly [(ngModel)]="gordura"></ion-input>
+      </ion-col>
+
+  </ion-row>
+    <!--<ion-card>
+      <h2 id="charts">Partes que treino (%)</h2>
+        <div style="padding-top: 10px;">
+          <canvas #chartDoughnutBody width="400" height="300"></canvas>
+        </div>
+    </ion-card>-->
+    <ion-card>
+      <h2 id="charts">Peso</h2>
+      <div style="padding-top: 10px;">
+        <canvas #chartBarPeso width="400" height="300"></canvas>
+      </div>
+    </ion-card>
+
+    <ion-card>
+      <h2 id="charts">Indices de Gordura</h2>
+      <div style="padding-top: 10px;">
+        <canvas #chartBarIndices width="400" height="300"></canvas>
+      </div>
+    </ion-card>
+
+    <ion-card>
+    <h2 id="charts">Membros Superiores</h2>
+    <div style="padding-top: 10px;">
+      <canvas #chartLineSuperior width="400" height="300"></canvas>
+    </div>
+  </ion-card>
+
+  <ion-card>
+    <h2 id="charts">Torax</h2>
+    <div style="padding-top: 10px;">
+      <canvas #chartLineTorax width="400" height="300"></canvas>
+    </div>
+  </ion-card>
+
+  <ion-card>
+    <h2 id="charts">Membros Inferiores</h2>
+    <div style="padding-top: 10px;">
+      <canvas #chartLineInferiores width="400" height="300"></canvas>
+    </div>
+  </ion-card>
+  <!--<div>
+    <ion-button expand="full" fill="outline">Dobras Cutanênas</ion-button>
+  </div>
+  <ion-grid>
+    <div class="dcMembro">Torax</div>
+    <ion-row justify-content-center align-items-center>
+      <ion-col size="1" class="bgMes">#</ion-col>
+      <ion-col size="2" class="bgPeitoral">Peito</ion-col>
+      <ion-col size="3" class="bgSE">Subescap</ion-col>
+      <ion-col size="3" class="bgMeio">Suprailíac</ion-col>
+      <ion-col size="3" class="bgAb">Abdômen</ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col class="col-mes" size="2">Jun</ion-col>
+      <ion-col class="col-peito" size="2">25.50</ion-col>
+      <ion-col class="col-subescapulo" size="3">26.80</ion-col>
+      <ion-col size="3">26.80</ion-col>
+      <ion-col size="2">26.80</ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col class="col-mes" size="2">Jul</ion-col>
+      <ion-col class="col-peito" size="2">25.50</ion-col>
+      <ion-col class="col-subescapulo" size="3">26.80</ion-col>
+      <ion-col size="3">26.80</ion-col>
+      <ion-col size="2">26.80</ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col class="col-mes" size="2">Ago</ion-col>
+      <ion-col class="col-peito" size="2">25.50</ion-col>
+      <ion-col class="col-subescapulo" size="3">26.80</ion-col>
+      <ion-col size="3">26.80</ion-col>
+      <ion-col size="2">26.80</ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col class="col-mes" size="2">Set</ion-col>
+      <ion-col class="col-peito" size="2">25.50</ion-col>
+      <ion-col class="col-subescapulo" size="3">26.80</ion-col>
+      <ion-col size="3">26.80</ion-col>
+      <ion-col size="2">26.80</ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-grid>
+    <div class="dcMembro">Membros Superiores</div>
+    <ion-row>
+      <ion-col class="bgMes">Mês</ion-col>
+      <ion-col class="bgPeitoral">Axila</ion-col>
+      <ion-col class="bgSE">Tríceps</ion-col>
+      <ion-col class="bgMeio">Bíceps</ion-col>
+      
+    </ion-row>
+    <ion-row>
+      <ion-col>Jun</ion-col>
+      <ion-col>25.50</ion-col>
+      <ion-col>26.80</ion-col>
+      <ion-col>26.80</ion-col>
+     
+    </ion-row>
+
+    <ion-row>
+      <ion-col>Jul</ion-col>
+      <ion-col>25.50</ion-col>
+      <ion-col>26.80</ion-col>
+      <ion-col>26.80</ion-col>
+      
+    </ion-row>
+
+    <ion-row>
+      <ion-col>Ago</ion-col>
+      <ion-col>25.50</ion-col>
+      <ion-col>26.80</ion-col>
+      <ion-col>26.80</ion-col>
+      
+    </ion-row>
+
+    <ion-row>
+      <ion-col>Set</ion-col>
+      <ion-col>25.50</ion-col>
+      <ion-col>26.80</ion-col>
+      <ion-col>26.80</ion-col>
+     
+    </ion-row>
+  </ion-grid>
+
+   <ion-grid>
+    <div class="dcMembro">Membros Inferiores</div>
+    <ion-row>
+      <ion-col class="bgMes">Mês</ion-col>
+      <ion-col class="bgPeitoral">Coxa</ion-col>
+      <ion-col class="bgSE">Panturrilha</ion-col>
+      
+    </ion-row>
+    <ion-row>
+      <ion-col>Jun</ion-col>
+      <ion-col>25.50</ion-col>
+      <ion-col>26.80</ion-col>
+     
+    </ion-row>
+
+    <ion-row>
+      <ion-col>Jul</ion-col>
+      <ion-col>25.50</ion-col>
+      <ion-col>26.80</ion-col>
+     
+    </ion-row>
+
+    <ion-row>
+      <ion-col>Ago</ion-col>
+      <ion-col>25.50</ion-col>
+      <ion-col>26.80</ion-col>
+      
+    </ion-row>
+
+    <ion-row>
+      <ion-col>Set</ion-col>
+      <ion-col>25.50</ion-col>
+      <ion-col>26.80</ion-col>
+     
+    </ion-row>
+  </ion-grid>-->
+  <br>
+  <div>
+    <ion-button class="titulo-DC" expand="full" fill="outline">Dobras Cutanênas</ion-button>
+  </div>
+  <mat-accordion class="example-headers-align" multi>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <div class="dcMembro">Torax</div>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+     <ion-grid>
+      
+      <ion-row justify-content-center align-items-center>
+        <ion-col size="1" class="bgMes">#</ion-col>
+        <ion-col size="2" class="bgPeitoral">Peito</ion-col>
+        <ion-col size="3" class="bgSE">Subescapular</ion-col>
+        <ion-col size="3" class="bgMeio">Suprailíaco</ion-col>
+        <ion-col size="3" class="bgAb">Abdômen</ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col class="col-mes" size="2">Jun</ion-col>
+        <ion-col class="col-peito" size="2">25.50</ion-col>
+        <ion-col class="col-subescapulo" size="3">26.80</ion-col>
+        <ion-col size="3">26.80</ion-col>
+        <ion-col size="2">26.80</ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col class="col-mes" size="2">Jul</ion-col>
+        <ion-col class="col-peito" size="2">25.50</ion-col>
+        <ion-col class="col-subescapulo" size="3">26.80</ion-col>
+        <ion-col size="3">26.80</ion-col>
+        <ion-col size="2">26.80</ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col class="col-mes" size="2">Ago</ion-col>
+        <ion-col class="col-peito" size="2">25.50</ion-col>
+        <ion-col class="col-subescapulo" size="3">26.80</ion-col>
+        <ion-col size="3">26.80</ion-col>
+        <ion-col size="2">26.80</ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col class="col-mes" size="2">Set</ion-col>
+        <ion-col class="col-peito" size="2">25.50</ion-col>
+        <ion-col class="col-subescapulo" size="3">26.80</ion-col>
+        <ion-col size="3">26.80</ion-col>
+        <ion-col size="2">26.80</ion-col>
+      </ion-row>
+    </ion-grid>
+  </mat-expansion-panel>
+  <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <div class="dcMembro">Membros Superiores</div>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+     <ion-grid>
+      
+      <ion-row justify-content-center align-items-center>
+        <ion-col size="1" class="bgMes">#</ion-col>
+        <ion-col size="2" class="bgPeitoral">Peito</ion-col>
+        <ion-col size="3" class="bgSE">Subescap</ion-col>
+        <ion-col size="3" class="bgMeio">Suprailíac</ion-col>
+        <ion-col size="3" class="bgAb">Abdômen</ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col class="col-mes" size="2">Jun</ion-col>
+        <ion-col class="col-peito" size="2">25.50</ion-col>
+        <ion-col class="col-subescapulo" size="3">26.80</ion-col>
+        <ion-col size="3">26.80</ion-col>
+        <ion-col size="2">26.80</ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col class="col-mes" size="2">Jul</ion-col>
+        <ion-col class="col-peito" size="2">25.50</ion-col>
+        <ion-col class="col-subescapulo" size="3">26.80</ion-col>
+        <ion-col size="3">26.80</ion-col>
+        <ion-col size="2">26.80</ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col class="col-mes" size="2">Ago</ion-col>
+        <ion-col class="col-peito" size="2">25.50</ion-col>
+        <ion-col class="col-subescapulo" size="3">26.80</ion-col>
+        <ion-col size="3">26.80</ion-col>
+        <ion-col size="2">26.80</ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col class="col-mes" size="2">Set</ion-col>
+        <ion-col class="col-peito" size="2">25.50</ion-col>
+        <ion-col class="col-subescapulo" size="3">26.80</ion-col>
+        <ion-col size="3">26.80</ion-col>
+        <ion-col size="2">26.80</ion-col>
+      </ion-row>
+    </ion-grid>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <div class="dcMembro">Membros Inferiores</div>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+     <ion-grid>
+      
+      <ion-row justify-content-center align-items-center>
+        <ion-col size="1" class="bgMes">#</ion-col>
+        <ion-col size="2" class="bgPeitoral">Peito</ion-col>
+        <ion-col size="3" class="bgSE">Subescap</ion-col>
+        <ion-col size="3" class="bgMeio">Suprailíac</ion-col>
+        <ion-col size="3" class="bgAb">Abdômen</ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col class="col-mes" size="2">Jun</ion-col>
+        <ion-col class="col-peito" size="2">25.50</ion-col>
+        <ion-col class="col-subescapulo" size="3">26.80</ion-col>
+        <ion-col size="3">26.80</ion-col>
+        <ion-col size="2">26.80</ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col class="col-mes" size="2">Jul</ion-col>
+        <ion-col class="col-peito" size="2">25.50</ion-col>
+        <ion-col class="col-subescapulo" size="3">26.80</ion-col>
+        <ion-col size="3">26.80</ion-col>
+        <ion-col size="2">26.80</ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col class="col-mes" size="2">Ago</ion-col>
+        <ion-col class="col-peito" size="2">25.50</ion-col>
+        <ion-col class="col-subescapulo" size="3">26.80</ion-col>
+        <ion-col size="3">26.80</ion-col>
+        <ion-col size="2">26.80</ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col class="col-mes" size="2">Set</ion-col>
+        <ion-col class="col-peito" size="2">25.50</ion-col>
+        <ion-col class="col-subescapulo" size="3">26.80</ion-col>
+        <ion-col size="3">26.80</ion-col>
+        <ion-col size="2">26.80</ion-col>
+      </ion-row>
+    </ion-grid>
+    </mat-expansion-panel>
+</mat-accordion>
+
+   <!--<ion-card>
+    <h2 id="charts">Tempo de treinamento (%)</h2>
+    <div style="padding-top: 10px;">
+      <canvas #chartRadar width="400" height="300"></canvas>
+    </div>
+  </ion-card>-->
+
+  <!--<ion-card>
+    <h2 id="charts">Dobras Cutaneas</h2>
+    <div style="padding-top: 10px;">
+      <canvas #chartLineDobrasCutaneas width="400" height="300"></canvas>
+    </div>
+  </ion-card>-->
+
+  
+  <!--<ion-slides [options]="sliderOpts">
+  
+    <ion-slide *ngFor="let img of [1,2,3]" style="width: 98px;" >
+      <ion-col class="progress-col">
+          <img src="assets/foto-progress/{{ img }}.jpg" tappable (click)="openPreview(img)">
+        </ion-col>
+    </ion-slide>
+
+  </ion-slides>-->
+
+  <!--<br>
+  <ion-item>
+    <ion-avatar slot="start" style="margin-top:-20%;">
+      <img src="assets/rodrigo-3.jpg">
+    </ion-avatar>
+    <ion-label>
+      <h3>{{titulo}}</h3>
+      <ion-textarea><p>{{dicas}}</p></ion-textarea>
+    </ion-label>
+    <ion-icon name="create" (click)="openEditDicas()" ></ion-icon>
+  </ion-item>
+
+  <ion-card>
+    <ion-item>
+      <ion-avatar item-start>
+        <img src="assets/rodrigo-3.jpg">
+      </ion-avatar>
+      <ion-label>
+        <h2>Rodrigo</h2>
+        <p>Julho 5, 2019</p>
+      </ion-label>
+    </ion-item>
+
+    <img src="assets/post/proteina.jpg">
+
+    <ion-card-content>
+      <p>O baixo consumo de proteína pode exercer efeitos negativos no corpo, como queda de cabelo, rachaduras na pele e até perda de peso, à medida que a massa muscular diminui. Por causa disso, muitas pessoas recorrem ao consumo controlado para fortalecer os músculos e evitar as consequências de uma dieta pobre no nutriente.</p>
+    </ion-card-content>
+
+    <ion-row>
+      <ion-col>
+      
+      </ion-col>
+      <ion-col>
+        
+      </ion-col>
+      <ion-col align-self-center text-center>
+        <ion-note>
+          11h atrás
+        </ion-note>
+      </ion-col>
+    </ion-row>
+
+  </ion-card>-->
+
+</ion-content>

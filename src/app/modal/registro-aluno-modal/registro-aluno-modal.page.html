@@ -1,0 +1,50 @@
+<ion-content padding>
+  <div class="dismiss">
+    <ion-buttons slot="end" (click)="dismiss()">
+      <div class="dismiss">X</div>
+    </ion-buttons>
+  </div>
+  <form #form="ngForm" (ngSubmit)="addAluno(form)">
+        <ion-list lines="full">
+         
+          <ion-item>
+            <ion-label position="stacked">Nome <ion-text color="danger">*</ion-text></ion-label>
+            <ion-input name="nome" required type="text" ngModel required></ion-input>
+          </ion-item>
+          
+          <ion-item>
+            <ion-label position="stacked">Data de Nascimento <ion-text color="danger">*</ion-text></ion-label>
+            <ion-input name="nascimento" required type="date" ngModel required></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">Ocupação</ion-label>
+            <ion-textarea name="ocupacao" type="text" required ngModel ></ion-textarea>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">Objetivo<ion-text color="danger">*</ion-text></ion-label>
+            <ion-textarea name="objetivo" type="text"  ngModel required></ion-textarea>
+          </ion-item>
+
+          <!--<ion-card>
+            <ion-card-header>
+              <ion-card-title>Foto</ion-card-title>
+            </ion-card-header>
+            <img *ngIf="imagePath" src="{{imagePath}}"/>
+            <ion-input name="img" type="text" ngModel required value="{{imagePath}}" disabled></ion-input>
+            <ion-card-content>
+              <ion-button color="medium" size="large" (click)="selectImage()">
+                <ion-icon slot="icon-only" name="camera"></ion-icon>
+              </ion-button>
+            </ion-card-content>
+          </ion-card>-->
+        
+          
+        <div class="ion-padding">
+          <ion-button type="submit" expand="block" class="ion-no-margin">Registrar Aluno</ion-button>
+        </div>
+      </ion-list>
+    </form>
+     
+</ion-content>

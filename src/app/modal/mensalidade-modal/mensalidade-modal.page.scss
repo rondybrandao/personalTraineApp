@@ -1,0 +1,35 @@
+ion-content {
+    --background: linear-gradient(to left, rgba(237, 243, 237, 0.68), rgba(237, 243, 237, 0.68)), url('/assets/header-fitness.jpg') no-repeat center center / cover;
+  }
+ion-col {
+    background-color: lightgrey;
+    border: 2px solid #aeb7ca;
+  }
+  
+.bgMes {
+    background: #3dc2ff;
+    font-family: fantasy;
+}
+
+.bgValor {
+    background: yellow;
+    font-family: fantasy;
+}
+
+.bgPagamento {
+    background: green;
+    font-family: fantasy;
+}
+
+.nomeDoAluno {
+    font-size: 35px;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    text-align: center;
+}
+
+.dismiss {
+    font-size: x-large;
+    color: black;
+    margin-left: 93%;
+    margin-top: 10px;
+  }

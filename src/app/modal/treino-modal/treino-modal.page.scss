@@ -1,0 +1,44 @@
+ion-content {
+    --background: linear-gradient(to left, rgba(237, 243, 237, 0.68), rgba(237, 243, 237, 0.68)), url('/assets/header-fitness.jpg') no-repeat center center / cover;
+}
+
+ion-toolbar {
+    --background: url('/assets/gym.jpg') no-repeat center center / cover;   
+    color: white
+}
+.card-header-segunda{
+    background:blue;
+    text-align: center;
+}
+
+.card-header-terca{
+    background:green;
+    text-align: center;
+}
+
+.card-title {
+    color: white
+}
+.card-subtitle {
+    color: black
+}
+
+.membros-treinados {
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
+.serie-repeticao {
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
+.btnSalvar {
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
+.search {
+    padding-left: 8px;
+    padding-right: 8px;
+}

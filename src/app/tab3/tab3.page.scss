@@ -1,0 +1,23 @@
+ion-toolbar {
+    --background: url('/assets/header-financeiro4.jpg') no-repeat center center/cover;
+    -webkit-background-size: cover;
+    color: darkblue;
+    font-family: fantasy;  
+    text-align: center;
+  }
+  
+  ion-content {
+    --background: linear-gradient(to left, rgba(237, 243, 237, 0.68), rgba(237, 243, 237, 0.68)), url('/assets/header-fitness.jpg') no-repeat center center / cover;
+  }
+
+.btn-add-receita{
+  font-size: large;
+} 
+  .example-button-row {
+    display: table-cell;
+    width: 490px;
+    text-align: center;
+  }
+  .example-button-row .mat-button-base {
+    margin: 8px 2px 8px 1px;
+  }
