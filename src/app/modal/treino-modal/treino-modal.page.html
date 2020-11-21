@@ -1,17 +1,20 @@
 <ion-header>
   <ion-toolbar>
+    <ion-buttons slot="start" (click)="dismiss()">
+      <ion-icon size="large" name="arrow-back"></ion-icon>
+    </ion-buttons>
     <ion-title>Plano de treino</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <form #form="ngForm">
-    <div>
-      <ion-chip >
-        <ion-label color="dark">segunda</ion-label>
+  
+    <!--<div>
+      <ion-chip [style.background-color]="dia.color" (click)="getDiaDeTreino('seg')">
+        <ion-label>segunda</ion-label>
       </ion-chip>
 
-      <ion-chip>
+      <ion-chip [style.background-color]="dia.color" (click)="getDiaDeTreino('ter')">
         <ion-label>terça</ion-label>
       </ion-chip>
 
@@ -27,101 +30,386 @@
         <ion-label>sexta</ion-label>
       </ion-chip>
 
-    </div>
+    </div>-->
 
-    <div class="membros-treinados">
-      <ion-list lines="full">     
-        <ion-item>
-          <ion-label>Membros treinados</ion-label>
-          <ion-select [interfaceOptions]="customAlertOptions" interface="alert" multiple="true" >
-            <ion-select-option value="bacon">Ombros</ion-select-option>
-            <ion-select-option value="olives">Tríceps</ion-select-option>
-            <ion-select-option value="xcheese">Bíceps</ion-select-option>
-            <ion-select-option value="peppers">Peitoral</ion-select-option>
-            <ion-select-option value="mushrooms">Abdominal</ion-select-option>
-            <ion-select-option value="onions">Costa</ion-select-option>
-            <ion-select-option value="pepperoni">Panturrilha</ion-select-option>
-            <ion-select-option value="pineapple">Coxa</ion-select-option>
-            <ion-select-option value="sausage">Gluteo</ion-select-option>
-          </ion-select>
-        </ion-item>
-      </ion-list>
-    </div>
-  
-    <!-- Search Bar -->
-    <ion-searchbar placeholder="Pesquisar exercício" [(ngModel)]="term" name="term" animated="true" (ionChange)="getItems($event)"></ion-searchbar>
+    <!-- Segment with secondary color -->
+    <ion-segment scrollable [(ngModel)]="dias" (ionChange)="segmentChanged($event)" color="secondary">
+      <ion-segment-button value="seg">
+        <ion-label>Seg</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="ter">
+        <ion-label>Ter</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="qua">
+        <ion-label>Qua</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="qui">
+        <ion-label>Qui</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="sex">
+        <ion-label>Sex</ion-label>
+      </ion-segment-button><ion-segment-button value="sab">
+        <ion-label>Sab</ion-label>
+      </ion-segment-button>
+    </ion-segment>
 
-    <!-- List Items -->
-    <ion-list *ngIf="isItemAvailable">
-      <ion-item *ngFor="let item of filterData | filter:term">
-        <ion-label>{{item.exercicio}}</ion-label>
-      </ion-item>
-    </ion-list>
+    <div [ngSwitch]="dias">
+      <div *ngSwitchCase="'seg'">
 
+        <!-- Search Bar -->
+        <ion-searchbar placeholder="Pesquisar exercício" [(ngModel)]="exercicio" name="exercicio" animated="true" (ionChange)="getItems($event)"></ion-searchbar>
 
-    <div class="serie-repeticao">
-      <ion-item>
-        <ion-label position="floating">Série</ion-label>
-        <ion-input type="number"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label position="floating">Repetição</ion-label>
-        <ion-input type="number"></ion-input>
-      </ion-item>
-    </div>
-    
-    <div class="btnSalvar"><ion-button expand="full">SALVAR</ion-button></div>
-
-  </form>
-
-
-
-  <ion-card>
-      <ion-card-header class="card-header-segunda">
-        <ion-card-title class="card-title">Segunda</ion-card-title>
-        <ion-card-subtitle class="card-subtitle">Peito - Tríceps</ion-card-subtitle>
-      </ion-card-header>
-
-      <ion-card-content>
-        <ion-item href="#" class="ion-activated">
-          <ion-icon name="wifi" slot="start"></ion-icon>
-          <ion-label>
-            <h2>Supino inclinado c/ barra</h2>
-            <a>3X - 10 repet</a>
-          </ion-label>
-        </ion-item>
-
-          <ion-item href="#">
-            <ion-icon name="wine" slot="start"></ion-icon>
-            <ion-label>Crucifixo reto</ion-label>
+        <!-- List Items -->
+        <ion-list *ngIf="isItemAvailable">
+          <ion-item *ngFor="let item of filterData | filter:exercicio"  (click)="addExercicio(item.membro, item.exercicio, item.img)">
+            <ion-label>{{item.exercicio}}</ion-label>
           </ion-item>
+        </ion-list>
+        
+        <div class="serie-repeticao">
+          <ion-row>
+            <ion-col class="ion-align-self-center">
+              <ion-item>
+                <ion-label position="floating">Série</ion-label>
+                <ion-input type="number" [(ngModel)]="serie"></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col class="ion-align-self-center">
+              <ion-item>
+                <ion-label position="floating">Repetição</ion-label>
+                <ion-input type="number" [(ngModel)]="repeticao"></ion-input>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <div class="btnSalvar"><ion-button expand="full" (click)="salvarExercicio(serie, repeticao)">Adcionar</ion-button></div>   
+        </div>
 
-          <ion-item class="ion-activated">
-            <ion-icon name="warning" slot="start"></ion-icon>
-            <ion-label>Voador</ion-label>
-          </ion-item>
+        <ion-card>
+          <ion-card-header class="card-header-segunda">
+            <ion-card-title class="card-title">Segunda</ion-card-title>
+            <ion-card-subtitle class="card-subtitle">
+              <div *ngFor="let m of grupoMuscularSegunda"><a> {{ m }} </a></div>
+            </ion-card-subtitle>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-list>
+              <ion-item-sliding *ngFor="let item of newArrayExercicioSegunda">
+                <ion-item>
+                  <ion-icon slot="end" name="ellipsis-vertical-outline"></ion-icon>
+                  <ion-label>
+                    <h2>{{ item.exercicio }}</h2>
+                    
+                    <a>{{item.serie}}X - {{item.repeticao}} rep</a>
+                    
+                  </ion-label>
+                </ion-item>
+                <ion-item-options>
+                  <button class="bgMedidas"ion-button  icon-start (click)="deleteSegunda(newArrayExercicioSegunda, newArrayExercicioSegunda.indexOf(item))">
+                    <ion-icon name="create"></ion-icon>
+                    Apagar
+                  </button>
 
-          <ion-item>
-            <ion-icon name="walk" slot="start"></ion-icon>
-            <ion-label>Francês deitado c/ alteres</ion-label>
-          </ion-item>
+                  <button class="bgTreino"ion-button icon-start (click)="edit(item)">
+                    <ion-icon name="barbell-outline"></ion-icon>
+                    Editar
+                  </button>
 
-          <ion-item href="#">
-            <ion-icon name="wine" slot="start"></ion-icon>
-            <ion-label>Corda cross</ion-label>
-          </ion-item>
-
-          <ion-item class="ion-activated">
-            <ion-icon name="warning" slot="start"></ion-icon>
-            <ion-label>Barra cross</ion-label>
-          </ion-item>
-
-          <ion-item class="ion-activated">
-            <ion-icon name="warning" slot="start"></ion-icon>
-            <ion-label>Tríceps testa</ion-label>
-          </ion-item>
-
+                </ion-item-options>
+              </ion-item-sliding>
+            </ion-list>
           </ion-card-content>
+          <div class="btnSalvar"><ion-button expand="full" (click)="sendSegunda()">ENVIAR SEGUNDA</ion-button></div>
         </ion-card>
+      </div>
+
+      <div *ngSwitchCase="'ter'">
+
+        <!-- Search Bar -->
+        <ion-searchbar placeholder="Pesquisar exercício" [(ngModel)]="exercicio" name="exercicio" animated="true" (ionChange)="getItems($event)"></ion-searchbar>
+
+        <!-- List Items -->
+        <ion-list *ngIf="isItemAvailable">
+          <ion-item *ngFor="let item of filterData | filter:exercicio"  (click)="addExercicio(item.membro, item.exercicio)">
+            <ion-label>{{item.exercicio}}</ion-label>
+          </ion-item>
+        </ion-list>
+        
+        <div class="serie-repeticao">
+          <ion-row>
+            <ion-col class="ion-align-self-center">
+              <ion-item>
+                <ion-label position="floating">Série</ion-label>
+                <ion-input type="number" [(ngModel)]="serie"></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col class="ion-align-self-center">
+              <ion-item>
+                <ion-label position="floating">Repetição</ion-label>
+                <ion-input type="number" [(ngModel)]="repeticao"></ion-input>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <div class="btnSalvar"><ion-button expand="full" (click)="salvarExercicio(serie, repeticao)">Adcionar</ion-button></div>   
+        </div>
+
+        <ion-card>
+          <ion-card-header class="card-header-terca">
+            <ion-card-title class="card-title">Terça</ion-card-title>
+            <ion-card-subtitle class="card-subtitle">
+              <div *ngFor="let m of grupoMuscularTerca"><a> {{ m }} </a></div>
+            </ion-card-subtitle>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-list>
+              <ion-item *ngFor="let item of newArrayExercicioTerca">
+                <ion-icon name="wifi" slot="start"></ion-icon>
+                <ion-label>
+                  <h2>{{ item.exercicio }}</h2>
+                  <a>{{item.serie}}X - {{item.repeticao}} rep</a>
+                </ion-label>
+              </ion-item>
+              <!--<ion-item *ngFor="let item of arrayDeExercicioDia">
+                <ion-icon name="wifi" slot="start"></ion-icon>
+                <ion-label>
+                  <h2>{{ item }}</h2>
+                  <a>{{serie}}X - {{repeticao}} rep</a>
+                </ion-label>
+              </ion-item>-->
+            </ion-list>
+          </ion-card-content>
+          <div class="btnSalvar"><ion-button expand="full" (click)="sendTerca()">ENVIAR TERÇA</ion-button></div>
+        </ion-card>
+      </div>
+
+      <div *ngSwitchCase="'qua'">
+
+        <!-- Search Bar -->
+        <ion-searchbar placeholder="Pesquisar exercício" [(ngModel)]="exercicio" name="exercicio" animated="true" (ionChange)="getItems($event)"></ion-searchbar>
+
+        <!-- List Items -->
+        <ion-list *ngIf="isItemAvailable">
+          <ion-item *ngFor="let item of filterData | filter:exercicio"  (click)="addExercicio(item.membro, item.exercicio)">
+            <ion-label>{{item.exercicio}}</ion-label>
+          </ion-item>
+        </ion-list>
+        
+        <div class="serie-repeticao">
+          <ion-row>
+            <ion-col class="ion-align-self-center">
+              <ion-item>
+                <ion-label position="floating">Série</ion-label>
+                <ion-input type="number" [(ngModel)]="serie"></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col class="ion-align-self-center">
+              <ion-item>
+                <ion-label position="floating">Repetição</ion-label>
+                <ion-input type="number" [(ngModel)]="repeticao"></ion-input>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <div class="btnSalvar"><ion-button expand="full" (click)="salvarExercicio(serie, repeticao)">Adcionar</ion-button></div>   
+        </div>
+
+        <ion-card>
+          <ion-card-header class="card-header-quarta">
+            <ion-card-title class="card-title">Quarta</ion-card-title>
+            <ion-card-subtitle class="card-subtitle">
+              <div *ngFor="let m of grupoMuscularQuarta"><a> {{ m }} </a></div>
+            </ion-card-subtitle>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-list>
+              <ion-item *ngFor="let item of newArrayExercicioQuarta">
+                <ion-icon name="wifi" slot="start"></ion-icon>
+                <ion-label>
+                  <h2>{{ item.exercicio }}</h2>
+                  <a>{{item.serie}}X - {{item.repeticao}} rep</a>
+                </ion-label>
+              </ion-item>
+              <!--<ion-item *ngFor="let item of arrayDeExercicioDia">
+                <ion-icon name="wifi" slot="start"></ion-icon>
+                <ion-label>
+                  <h2>{{ item }}</h2>
+                  <a>{{serie}}X - {{repeticao}} rep</a>
+                </ion-label>
+              </ion-item>-->
+            </ion-list>
+          </ion-card-content>
+          <div class="btnSalvar"><ion-button expand="full" (click)="sendQuarta()">ENVIAR QUARTA</ion-button></div>
+        </ion-card>
+      </div>
+
+      <div *ngSwitchCase="'qui'">
+
+        <!-- Search Bar -->
+        <ion-searchbar placeholder="Pesquisar exercício" [(ngModel)]="exercicio" name="exercicio" animated="true" (ionChange)="getItems($event)"></ion-searchbar>
+
+        <!-- List Items -->
+        <ion-list *ngIf="isItemAvailable">
+          <ion-item *ngFor="let item of filterData | filter:exercicio"  (click)="addExercicio(item.membro, item.exercicio)">
+            <ion-label>{{item.exercicio}}</ion-label>
+          </ion-item>
+        </ion-list>
+        
+        <div class="serie-repeticao">
+          <ion-row>
+            <ion-col class="ion-align-self-center">
+              <ion-item>
+                <ion-label position="floating">Série</ion-label>
+                <ion-input type="number" [(ngModel)]="serie"></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col class="ion-align-self-center">
+              <ion-item>
+                <ion-label position="floating">Repetição</ion-label>
+                <ion-input type="number" [(ngModel)]="repeticao"></ion-input>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <div class="btnSalvar"><ion-button expand="full" (click)="salvarExercicio(serie, repeticao)">Adcionar</ion-button></div>   
+        </div>
+
+        <ion-card>
+          <ion-card-header class="card-header-quinta">
+            <ion-card-title class="card-title">Quinta</ion-card-title>
+            <ion-card-subtitle class="card-subtitle">
+              <div *ngFor="let m of grupoMuscularQuinta"><a> {{ m }} </a></div>
+            </ion-card-subtitle>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-list>
+              <ion-item *ngFor="let item of newArrayExercicioQuinta">
+                <ion-icon name="wifi" slot="start"></ion-icon>
+                <ion-label>
+                  <h2>{{ item.exercicio }}</h2>
+                  <a>{{item.serie}}X - {{item.repeticao}} rep</a>
+                </ion-label>
+              </ion-item>
+              <!--<ion-item *ngFor="let item of arrayDeExercicioDia">
+                <ion-icon name="wifi" slot="start"></ion-icon>
+                <ion-label>
+                  <h2>{{ item }}</h2>
+                  <a>{{serie}}X - {{repeticao}} rep</a>
+                </ion-label>
+              </ion-item>-->
+            </ion-list>
+          </ion-card-content>
+          <div class="btnSalvar"><ion-button expand="full" (click)="sendQuinta()">ENVIAR QUINTA</ion-button></div>
+        </ion-card>
+      </div>
+
+      <div *ngSwitchCase="'sex'">
+
+        <!-- Search Bar -->
+        <ion-searchbar placeholder="Pesquisar exercício" [(ngModel)]="exercicio" name="exercicio" animated="true" (ionChange)="getItems($event)"></ion-searchbar>
+
+        <!-- List Items -->
+        <ion-list *ngIf="isItemAvailable">
+          <ion-item *ngFor="let item of filterData | filter:exercicio"  (click)="addExercicio(item.membro, item.exercicio)">
+            <ion-label>{{item.exercicio}}</ion-label>
+          </ion-item>
+        </ion-list>
+        
+        <div class="serie-repeticao">
+          <ion-row>
+            <ion-col class="ion-align-self-center">
+              <ion-item>
+                <ion-label position="floating">Série</ion-label>
+                <ion-input type="number" [(ngModel)]="serie"></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col class="ion-align-self-center">
+              <ion-item>
+                <ion-label position="floating">Repetição</ion-label>
+                <ion-input type="number" [(ngModel)]="repeticao"></ion-input>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <div class="btnSalvar"><ion-button expand="full" (click)="salvarExercicio(serie, repeticao)">Adcionar</ion-button></div>   
+        </div>
+
+        <ion-card>
+          <ion-card-header class="card-header-sexta">
+            <ion-card-title class="card-title">Sexta</ion-card-title>
+            <ion-card-subtitle class="card-subtitle">
+              <div *ngFor="let m of grupoMuscularSexta"><a> {{ m }} </a></div>
+            </ion-card-subtitle>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-list>
+              <ion-item *ngFor="let item of newArrayExercicioSexta">
+                <ion-icon name="wifi" slot="start"></ion-icon>
+                <ion-label>
+                  <h2>{{ item.exercicio }}</h2>
+                  <a>{{item.serie}}X - {{item.repeticao}} rep</a>
+                </ion-label>
+              </ion-item>
+            </ion-list>
+          </ion-card-content>
+          <div class="btnSalvar"><ion-button expand="full" (click)="sendSexta()">ENVIAR SEXTA</ion-button></div>
+        </ion-card>
+      </div>
+
+      <div *ngSwitchCase="'sab'">
+
+        <!-- Search Bar -->
+        <ion-searchbar placeholder="Pesquisar exercício" [(ngModel)]="exercicio" name="exercicio" animated="true" (ionChange)="getItems($event)"></ion-searchbar>
+
+        <!-- List Items -->
+        <ion-list *ngIf="isItemAvailable">
+          <ion-item *ngFor="let item of filterData | filter:exercicio"  (click)="addExercicio(item.membro, item.exercicio)">
+            <ion-label>{{item.exercicio}}</ion-label>
+          </ion-item>
+        </ion-list>
+        
+        <div class="serie-repeticao">
+          <ion-row>
+            <ion-col class="ion-align-self-center">
+              <ion-item>
+                <ion-label position="floating">Série</ion-label>
+                <ion-input type="number" [(ngModel)]="serie"></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col class="ion-align-self-center">
+              <ion-item>
+                <ion-label position="floating">Repetição</ion-label>
+                <ion-input type="number" [(ngModel)]="repeticao"></ion-input>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <div class="btnSalvar"><ion-button expand="full" (click)="salvarExercicio(serie, repeticao)">Adcionar</ion-button></div>   
+        </div>
+
+        <ion-card>
+          <ion-card-header class="card-header-sabado">
+            <ion-card-title class="card-title">Sábado</ion-card-title>
+            <ion-card-subtitle class="card-subtitle">
+              <div *ngFor="let m of grupoMuscularSabado"><a> {{ m }} </a></div>
+            </ion-card-subtitle>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-list>
+              <ion-item *ngFor="let item of newArrayExercicioSabado">
+                <ion-icon name="wifi" slot="start"></ion-icon>
+                <ion-label>
+                  <h2>{{ item.exercicio }}</h2>
+                  <a>{{item.serie}}X - {{item.repeticao}} rep</a>
+                </ion-label>
+              </ion-item>
+              <!--<ion-item *ngFor="let item of arrayDeExercicioDia">
+                <ion-icon name="wifi" slot="start"></ion-icon>
+                <ion-label>
+                  <h2>{{ item }}</h2>
+                  <a>{{serie}}X - {{repeticao}} rep</a>
+                </ion-label>
+              </ion-item>-->
+            </ion-list>
+          </ion-card-content>
+          <div class="btnSalvar"><ion-button expand="full" (click)="sendSabado()">ENVIAR SÁBADO</ion-button></div>
+        </ion-card>
+      </div>
+
+    </div>
 
 </ion-content>

@@ -12,28 +12,10 @@
       <ion-col class="bgValor">Valor</ion-col>
       <ion-col class="bgPagamento">Pagamento</ion-col>
     </ion-row>
-    <ion-row>
-      <ion-col>Junho</ion-col>
-      <ion-col>50,00</ion-col>
-      <ion-col>05/06/2020</ion-col>
-    </ion-row>
-
-    <ion-row>
-      <ion-col>Julho</ion-col>
-      <ion-col>50,00</ion-col>
-      <ion-col>05/07/2020</ion-col>
-    </ion-row>
-
-    <ion-row>
-      <ion-col>Agosto</ion-col>
-      <ion-col>50,00</ion-col>
-      <ion-col>05/08/2020</ion-col>
-    </ion-row>
-
-    <ion-row>
-      <ion-col>Setembro</ion-col>
-      <ion-col>50,00</ion-col>
-      <ion-col>05/09/2020</ion-col>
+    <ion-row *ngFor="let i of listaDePagamentos">
+      <ion-col (click)="editMensalidade(i)"><ion-icon name="ellipsis-vertical-outline"></ion-icon>{{i.mensalidade.mesRef}}</ion-col>
+      <ion-col>{{i.mensalidade.valor}}</ion-col>
+      <ion-col>{{i.mensalidade.data}}</ion-col>
     </ion-row>
   </ion-grid>
 </ion-content>

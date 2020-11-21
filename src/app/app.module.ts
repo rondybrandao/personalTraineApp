@@ -26,7 +26,10 @@ import {MatExpansionModule} from '@angular/material/expansion';
 //search
 //import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 registerLocaleData(pt, 'pt-BR');
+
 
 @NgModule({
   declarations: [AppComponent],
@@ -41,7 +44,8 @@ registerLocaleData(pt, 'pt-BR');
     BrowserAnimationsModule,
     MatSliderModule,
     MatExpansionModule,
-    //Ng2SearchPipeModule
+    FormsModule,
+    ReactiveFormsModule,
   ],
   providers: [
     StatusBar,

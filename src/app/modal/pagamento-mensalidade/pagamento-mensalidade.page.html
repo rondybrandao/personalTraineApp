@@ -1,0 +1,41 @@
+<ion-content>
+  
+  <ion-card>
+    <h2>{{ nome }}</h2>
+    <form  #form="ngForm" (ngSubmit)="register(form)">
+      <ion-item>
+        <ion-label>Mês</ion-label>
+        <ion-select interface="popover" name="mes" ngModel required>
+          <ion-select-option value="01-Janeiro">Janeiro</ion-select-option>
+          <ion-select-option value="02-Fevereiro">Fevereiro</ion-select-option>
+          <ion-select-option value="03-Março">Março</ion-select-option>
+          <ion-select-option value="04-Abril">Abril</ion-select-option>
+          <ion-select-option value="05-Maio">Maio</ion-select-option>
+          <ion-select-option value="06-Junho">Junho</ion-select-option>
+          <ion-select-option value="07-Julho">Julho</ion-select-option>
+          <ion-select-option value="08-Agosto">Agosto</ion-select-option>
+          <ion-select-option value="09-Setembro">Setembro</ion-select-option>
+          <ion-select-option value="10-Outubro">Outubro</ion-select-option>
+          <ion-select-option value="11-Novembro">Novembro</ion-select-option>
+          <ion-select-option value="12-Dezembro">Dezembro</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating"  clearInput>Valor (R$)</ion-label>
+        <ion-input name="receita" ngModel required [brmasker]="{money: true, thousand: '.',  decimalCaracter: ','}"></ion-input>
+      </ion-item>
+
+      <ion-grid>
+        <ion-row justify-content-center>
+          <ion-col>
+            <ion-button expand="full" color="danger" shape="round" (click)="dismiss()">Cancelar</ion-button>
+          </ion-col>
+          <ion-col>
+            <ion-button expand="full" shape="round" type="submit">Confirmar</ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </form>
+  </ion-card>
+</ion-content>

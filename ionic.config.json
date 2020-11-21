@@ -1,5 +1,7 @@
 {
   "name": "personalTraineApp_v2",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }

@@ -19,7 +19,7 @@ import {MatButtonModule} from '@angular/material/button';
     ExploreContainerComponentModule,
     RouterModule.forChild([{ path: '', component: Tab3Page }]),
     Tab3PageRoutingModule,
-    MatButtonModule,
+    MatButtonModule
   ],
   declarations: [Tab3Page]
 })

@@ -22,13 +22,23 @@ const routes: Routes = [
     path: 'avaliacao-modal',
     loadChildren: () => import('./modal/avaliacao-modal/avaliacao-modal.module').then( m => m.AvaliacaoModalPageModule)
   },
-  {
-    path: 'add-despesas-modal',
-    loadChildren: () => import('./modal/add-despesas-modal/add-despesas-modal.module').then( m => m.AddDespesasModalPageModule)
-  },
+
   {
     path: 'treino-modal',
     loadChildren: () => import('./modal/treino-modal/treino-modal.module').then( m => m.TreinoModalPageModule)
+  },
+ 
+  {
+    path: 'balanco-modal',
+    loadChildren: () => import('./modal/balanco-modal/balanco-modal.module').then( m => m.BalancoModalPageModule)
+  },
+  {
+    path: 'pagamento-mensalidade',
+    loadChildren: () => import('./modal/pagamento-mensalidade/pagamento-mensalidade.module').then( m => m.PagamentoMensalidadePageModule)
+  },
+  {
+    path: 'edit-mensalidade',
+    loadChildren: () => import('./modal/edit-mensalidade/edit-mensalidade.module').then( m => m.EditMensalidadePageModule)
   },
 ];
 @NgModule({

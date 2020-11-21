@@ -8,7 +8,7 @@
 
 <ion-content [fullscreen]="true">
   <div class="example-button-row">
-    <button class="btn-add-receita" mat-raised-button color="primary" (click)="alertMes()">Registrar Balanço</button>
+    <button class="btn-add-receita" mat-raised-button color="primary" (click)="openBalancoModal()">Registrar Balanço</button>
     <!--button class="btn-add-receita" mat-raised-button color="warn" (click)="presentAlertAddDespesas()">Registrar Despesa</!--button>-->
   </div>
   <h2 id="charts">Histórico do Balanço</h2>
@@ -21,55 +21,13 @@
       
     </ion-row>
     <ion-row *ngFor="let item of balancoGeral">
-      <ion-col (click)="alertBalanco(item)"><ion-icon name="ellipsis-vertical-outline"></ion-icon>{{item.mes}}</ion-col>
+      <ion-col class="bgMes" (click)="alertEditBalanco(item)"><ion-icon name="ellipsis-vertical-outline"></ion-icon>{{item.mes}}</ion-col>
       <ion-col>{{item.receita}}</ion-col>
       <ion-col>{{item.despesa}}</ion-col>
-      <ion-col>{{item.lucro}}</ion-col>
-     
+      <ion-col>R$ {{item.lucro}}</ion-col>
     </ion-row>
   </ion-grid>
-
-  <!--<ion-grid>
-    <div class="dcMembro">Quadro Geral</div>
-    <ion-row>
-      <ion-col class="bgMes">Mês</ion-col>
-      <ion-col class="bgPeitoral">Receita</ion-col>
-      <ion-col class="bgSE">Despesas</ion-col>
-      <ion-col class="bgMeio">Lucro</ion-col>
-      
-    </ion-row>
-    <ion-row>
-      <ion-col>Jun</ion-col>
-      <ion-col>25.50</ion-col>
-      <ion-col>26.80</ion-col>
-      <ion-col>26.80</ion-col>
-     
-    </ion-row>
-
-    <ion-row>
-      <ion-col>Jul</ion-col>
-      <ion-col>25.50</ion-col>
-      <ion-col>26.80</ion-col>
-      <ion-col>26.80</ion-col>
-      
-    </ion-row>
-
-    <ion-row>
-      <ion-col>Ago</ion-col>
-      <ion-col>25.50</ion-col>
-      <ion-col>26.80</ion-col>
-      <ion-col>26.80</ion-col>
-      
-    </ion-row>
-
-    <ion-row>
-      <ion-col>Set</ion-col>
-      <ion-col>25.50</ion-col>
-      <ion-col>26.80</ion-col>
-      <ion-col>26.80</ion-col>
-     
-    </ion-row>
-  </ion-grid>-->
+ 
   <h2 id="charts">Lucro x Despesas</h2>
   <ion-card>
     
@@ -77,73 +35,4 @@
       <canvas #barBalanco width="400" height="300"></canvas>
     </div>
   </ion-card>
-
-  
-   <!--<ion-grid>
-    <div class="dcMembro">Tabela das Despesas</div>
-    <ion-row justify-content-center align-items-center>
-      <ion-col size="2" class="bgMes">#</ion-col>
-      <ion-col size="3" class="bgPeitoral">Transporte</ion-col>
-      <ion-col size="4" class="bgSE">Suplemento</ion-col>
-      
-      <ion-col size="3" class="bgAb">Outros</ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col class="col-mes" size="2">Jun</ion-col>
-      <ion-col class="col-peito" size="3">25.50</ion-col>
-      <ion-col class="col-subescapulo" size="4">26.80</ion-col>
-      
-      <ion-col size="3">26.80</ion-col>
-    </ion-row>
-
-    <ion-row>
-      <ion-col class="col-mes" size="2">Jul</ion-col>
-      <ion-col class="col-peito" size="3">25.50</ion-col>
-      <ion-col class="col-subescapulo" size="4">26.80</ion-col>
-      
-      <ion-col size="3">26.80</ion-col>
-    </ion-row>
-
-    <ion-row>
-      <ion-col class="col-mes" size="2">Ago</ion-col>
-      <ion-col class="col-peito" size="3">25.50</ion-col>
-      <ion-col class="col-subescapulo" size="4">26.80</ion-col>
-      
-      <ion-col size="3">26.80</ion-col>
-    </ion-row>
-
-    <ion-row>
-      <ion-col class="col-mes" size="2">Set</ion-col>
-      <ion-col class="col-peito" size="3">25.50</ion-col>
-      <ion-col class="col-subescapulo" size="4">26.80</ion-col>
-      
-      <ion-col size="3">26.80</ion-col>
-    </ion-row>
-  </ion-grid>-->
-
-  <!--<ion-card>
-    <h2 id="charts">Despesas</h2>
-    <div style="padding-top: 10px;">
-      <canvas #lineDespesas width="400" height="300"></canvas>
-    </div>
-  </ion-card>-->
-  <!--<h2 id="charts">Acumulados no Ano</h2>
-  <ion-card>
-    
-    <div style="padding-top: 10px;">
-        <canvas #chartDoughnutLucroMes width="400" height="300"></canvas>
-    </div>
-  </ion-card>
-
-
-  <ion-card>
-    <h2 id="charts">Despesas Detalhadas</h2>
-    <div style="padding-top: 10px;">
-      <canvas #chartPieDespesasDoMes width="400" height="300"></canvas>
-    </div>
-  </ion-card>-->
-
-  
-
-
 </ion-content>

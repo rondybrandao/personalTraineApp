@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/database';
 
-
 @Injectable({
   providedIn: 'root'
 })
@@ -24,14 +23,7 @@ export class AlunosService {
     })
   }
 
-  getHistoricoDePagamentosAluno(key){
-    console.log(key)
-    return new Promise((resolve, reject)=>{
-      this.db.database.ref('pagamentos').child('Rondy').once('value', snapshot=>{
-        console.log(snapshot.val())
-      })
-    })
-  }
+  
 
   save(aluno:any) {
     console.log(aluno)
@@ -58,5 +50,90 @@ export class AlunosService {
             resolve()})
       }
     })
+  }
+
+  getPlanoDeTreino(){
+    return new Promise((resolve, reject)=>{
+      this.db.database.ref('planoDeTreino').child('alunoTeste').once('value', snapshot => {
+  
+        resolve(snapshot.val())
+      })
+    })
+  }
+
+  sendSegunda(segunda){
+    return new Promise((resolve, reject)=>{
+      this.db.database.ref('planoDeTreino/alunoTeste').update({
+        segunda:segunda
+      })
+      resolve(true)
+      reject(false)
+    }).catch(err =>{
+      console.log(err)
+    })
+  }
+
+  sendTerca(terca){
+    return new Promise((resolve, reject)=>{
+      this.db.database.ref('planoDeTreino/alunoTeste').update({
+        segunda:terca
+      })
+      resolve(true)
+      reject(false)
+    }).catch(err =>{
+      console.log(err)
+    })
+  }
+
+  sendQuarta(quarta){
+    return new Promise((resolve, reject)=>{
+      this.db.database.ref('planoDeTreino/alunoTeste').update({
+        segunda:quarta
+      })
+      resolve(true)
+      reject(false)
+    }).catch(err =>{
+      console.log(err)
+    })
+  }
+
+  sendQuinta(quinta){
+    return new Promise((resolve, reject)=>{
+      this.db.database.ref('planoDeTreino/alunoTeste').update({
+        segunda:quinta
+      })
+      resolve(true)
+      reject(false)
+    }).catch(err =>{
+      console.log(err)
+    })
+  }
+
+  sendSexta(sexta){
+    return new Promise((resolve, reject)=>{
+      this.db.database.ref('planoDeTreino/alunoTeste').update({
+        segunda:sexta
+      })
+      resolve(true)
+      reject(false)
+    }).catch(err =>{
+      console.log(err)
+    })
+  }
+
+  sendSabado(sabado){
+    return new Promise((resolve, reject)=>{
+      this.db.database.ref('planoDeTreino/alunoTeste').update({
+        segunda:sabado
+      })
+      resolve(true)
+      reject(false)
+    }).catch(err =>{
+      console.log(err)
+    })
+  }
+
+  delete(dia, item){
+    this.db.database.ref('planoDeTreino/alunoTeste/' + dia).child(item).remove()
   }
 }

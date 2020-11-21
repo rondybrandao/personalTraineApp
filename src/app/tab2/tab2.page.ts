@@ -1,7 +1,9 @@
+import { FinanceiroService } from './../services/financeiro.service';
 import { MensalidadeModalPage } from './../modal/mensalidade-modal/mensalidade-modal.page';
 import { Component } from '@angular/core';
 import { AlunosService } from '../services/alunos.service';
 import { AlertController, ModalController } from '@ionic/angular';
+import { PagamentoMensalidadePage } from '../modal/pagamento-mensalidade/pagamento-mensalidade.page';
 
 @Component({
   selector: 'app-tab2',
@@ -12,6 +14,7 @@ export class Tab2Page {
   listaDeAlunos
   constructor(
     public alunoService: AlunosService,
+    public financeiroService: FinanceiroService,
     public alertController: AlertController,
     public modalController: ModalController) {this.getAlunos()}
   
@@ -28,46 +31,25 @@ export class Tab2Page {
       cssClass: 'my-custom-class',
       componentProps: {
         'key': key,
-        
       }
     });
     return await modal.present();
   }
 
-  async pagarMensalidade(key, nome) {
-    const alert = await this.alertController.create({
+  async openPagamentoModal(key, nome) {
+    const modal = await this.modalController.create({
+      component: PagamentoMensalidadePage,
       cssClass: 'my-custom-class',
-      header: 'Mensalidade',
-      subHeader: nome,
-      inputs:[
-        {
-          name: 'valor',
-          type: 'number',
-          placeholder: 'Valor (R$)',
-          cssClass: 'specialClass',
-          attributes: {
-            inputmode: 'decimal'
-          }
-        }
-      ],
-      buttons: [
-        {
-          text: 'Cancelar',
-          role: 'cancel',
-          cssClass: 'secondary',
-          handler: () => {
-            console.log('Confirm Cancel');
-          }
-        }, {
-          text: 'Pagar',
-          handler: (name) => {
-            console.log('Confirm Ok', key);
-            console.log('Confirm Ok', name);
-          }
-        }
-      ]
+      componentProps: {
+        'key': key,
+        'nome':nome
+      }
     });
-
-    await alert.present();
+    return await modal.present();
   }
+
+  pagamentoService(mes, key, name){
+    this.financeiroService.setMensalidade(mes, key, name)
+  }
+
 }

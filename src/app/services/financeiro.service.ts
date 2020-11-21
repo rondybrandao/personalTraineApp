@@ -37,15 +37,34 @@ export class FinanceiroService {
   }
 
   addBalanco(balanco){
-    const mesFormat = balanco.mesRef.slice(0, 3)
-    const lucro = balanco.receita - balanco.despesa
-    this.db.database.ref('balanco2/teste/' + balanco.mes)
+    console.log(balanco)
+    var receita = parseFloat(balanco.receita)
+    var despesa = parseFloat(balanco.despesa)
+    var lucro
+    if(receita < 10){
+      receita = parseFloat(balanco.receita) * 1000
+    }
+    if(despesa < 10){
+      despesa = parseFloat(balanco.despesa) * 1000
+    }
+    const mesFormat = balanco.mes.slice(3,6)
+    const mesIndice = balanco.mes.slice(0,2)
+    lucro = receita  - despesa
+    lucro = lucro.toLocaleString('pt-br',{ minimumFractionDigits: 2 })
+    //lucro = lucro.toLocaleString('pt-br',{style:'currency', currency:'BRL'})
+    console.log(lucro.toLocaleString('pt-br',{ minimumFractionDigits: 2 }))
+    console.log(receita +"-"+ despesa)
+    return new Promise((resolve)=>{
+      this.db.database.ref('balanco2/teste/' + mesIndice)
       .set({
         receita:balanco.receita,
         despesa:balanco.despesa,
         lucro:lucro,
         mes:mesFormat
       })
+      resolve('ok')
+    })
+    
   }
 
   getFinanceiro(){
@@ -116,19 +135,46 @@ export class FinanceiroService {
       this.db.list('balanco2/teste').snapshotChanges().subscribe(res=>{
         res.forEach(item =>{
           data.push(item.payload.val())
-          //console.log(item.key)
         })
+        console.log(data)
         resolve(data)
       })
+      
+    })
+  }
+
+  getBalanco3(){
+    var data = []
+    this.db.list('balanco2/teste').snapshotChanges().subscribe(res=>{
+      res.forEach(item =>{
+        data.push(item.payload.val())
+      })
+      console.log(data)
+      return data
     })
   }
 
   setBalanco(item){
     const lucro = item.receita - item.despesa
-    this.db.database.ref('balanco2/teste/'+item.mes).set({
-      receita:item.receita,
-      despesa:item.despesa,
-      lucro:lucro
+    return new Promise((resolve, reject)=>{
+      this.db.database.ref('balanco2/teste/'+item.mes).set({
+        receita:item.receita,
+        despesa:item.despesa,
+        lucro:lucro
+      })
+      resolve(true)
+    })
+    
+  }
+
+  setMensalidade(mes, key, name){
+    console.log(key, name)
+    const dataDoPagamento = moment().format('L');
+    console.log(dataDoPagamento)
+    this.db.database.ref('pagamentos/'+ key + '/' + mes).set({
+      data:dataDoPagamento,
+      valor:name.valor,
+      mesRef:mes
     })
   }
   

@@ -22,6 +22,7 @@
     <ion-list>
         <ion-item-sliding *ngFor="let aluno of listaDeAlunos">
           <ion-item (click)="presentModalAluno(aluno.key, aluno.img, aluno.nome)">
+              <ion-icon slot="end" name="ellipsis-vertical-outline"></ion-icon>
               <ion-avatar slot="start">
                 <img alt="" src="assets/aluno5.jpg">
                 <!--<img _ngcontent-ngg-c4="" alt="" src="{{aluno.img}}">-->

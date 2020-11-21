@@ -1,0 +1,28 @@
+<ion-content>
+  
+  <ion-card>
+    <h2>{{ nome }}</h2>
+    <form  #form="ngForm" (ngSubmit)="edit(form)">
+      <ion-item>
+        <ion-label>Mês</ion-label>
+        <h2>{{mes}}</h2>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating"  clearInput>Valor (R$)</ion-label>
+        <ion-input name="receita" ngModel="{{valor}}" required [brmasker]="{money: true, thousand: '.',  decimalCaracter: ','}"></ion-input>
+      </ion-item>
+
+      <ion-grid>
+        <ion-row justify-content-center>
+          <ion-col>
+            <ion-button expand="full" color="danger" shape="round" (click)="dismiss()">Cancelar</ion-button>
+          </ion-col>
+          <ion-col>
+            <ion-button expand="full" shape="round" type="submit">Confirmar</ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </form>
+  </ion-card>
+</ion-content>

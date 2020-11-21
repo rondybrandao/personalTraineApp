@@ -1,6 +1,9 @@
-import { AlunosService } from './../../services/alunos.service';
+import { MensalidadeService } from './../../services/mensalidade.service';
+import { FinanceiroService } from './../../services/financeiro.service';
 import { Component, OnInit, Input } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { AlertController, ModalController } from '@ionic/angular';
+import { EditMensalidadePage } from '../edit-mensalidade/edit-mensalidade.page';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-mensalidade-modal',
@@ -12,11 +15,14 @@ export class MensalidadeModalPage implements OnInit {
   @Input() nomeDoAluno: string;
   listaDePagamentos
   
-  constructor(public alunoService: AlunosService,
-              public modalController: ModalController) { }
+  constructor(public financeiroService: FinanceiroService,
+              public modalController: ModalController,
+              public alertController: AlertController,
+              public mensalidadeService:MensalidadeService,
+              public router:Router) { }
 
   ngOnInit() {
-    this.alunoService.getHistoricoDePagamentosAluno(this.key).then(res=>{
+    this.mensalidadeService.getMensalidade(this.key).then(res=>{
       this.listaDePagamentos = res
       console.log(this.listaDePagamentos)
     })
@@ -27,5 +33,26 @@ export class MensalidadeModalPage implements OnInit {
       'dismissed': true
     });
   }
+
+  async editMensalidade(obj){
+    console.log(obj)
+    const modal = await this.modalController.create({
+      component: EditMensalidadePage,
+      cssClass: 'my-custom-class',
+      componentProps: {
+        'id': this.key,
+        'key':obj.id,
+        'nome':this.nomeDoAluno,
+        'valor':obj.mensalidade.valor,
+        'mes':obj.mensalidade.mesRef
+      }
+    });
+    await modal.present();
+    await modal.onDidDismiss().then(()=>{
+      console.log('dismiss')
+      return this.dismiss()
+    })
+  
+    }
 
 }

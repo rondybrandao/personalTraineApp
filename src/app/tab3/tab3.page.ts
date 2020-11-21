@@ -1,8 +1,9 @@
-import { AddDespesasModalPage } from './../modal/add-despesas-modal/add-despesas-modal.page';
 import { Component, ViewChild, ElementRef, OnInit, Inject } from '@angular/core';
 import { Chart } from 'chart.js';
 import { LoadingController, AlertController, ModalController } from '@ionic/angular';
 import { FinanceiroService } from '../services/financeiro.service';
+import { BalancoModalPage } from '../modal/balanco-modal/balanco-modal.page';
+import { Observable } from 'rxjs';
 
 //import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
@@ -28,6 +29,7 @@ export class Tab3Page implements OnInit {
   receitas = []
   despesas = []
   lucro = []
+  periodo = []
 
   totalReceita
   totalDespesa
@@ -41,175 +43,26 @@ export class Tab3Page implements OnInit {
   balancoChart = []
   balancoGeral = []
 
-  balanco = [
-    { tipo: 'despesa', valor: 201, mes:'junho' },
-    { tipo: 'receita', valor: 2001, mes:'junho' },
-    { tipo: 'despesa', valor: 301, mes:'julho' },
-    { tipo: 'receita', valor: 2001, mes:'julho' },
-    { tipo: 'despesa', valor: 261, mes:'agosto' },
-    { tipo: 'receita', valor: 2261, mes:'agosto' },
-  ];
+  balanco
 
   constructor(
     public loadingCtrl: LoadingController,
     public alertController:AlertController,
     public modalController: ModalController,
     public financeiro:FinanceiroService
-    //public dialog: MatDialog
-  ) {
-    //this.getDataFinanceiro()
-    //this.getReceitas()
-    //this.getBalancao()
-    this.getBalanco2()
     
+  ) {
+
+    this.getBalanco2()
+
   }
 
   ngOnInit() {
-    //this.presentLoading()
-  }
-
-  async presentAlertAddDespesas() {
-    const alert = await this.alertController.create({
-      cssClass: 'my-custom-class',
-      header: 'Radio',
-      inputs: [
-        
-        {
-          name: 'radio1',
-          id: 'radio1',
-          type: 'radio',
-          label: 'Transporte',
-          value: 'transporte',
-        },
-        {
-          name: 'radio2',
-          id: 'radio2',
-          type: 'radio',
-          label: 'Suplementos',
-          value: 'suplemento'
-        },
-        {
-          name: 'radio3',
-          id: 'radio3',
-          type: 'radio',
-          label: 'Outros',
-          value: 'outros'
-        },
-        
-      ],
-      buttons: [
-        {
-          text: 'Cancelar',
-          role: 'cancelar',
-          cssClass: 'secondary',
-          handler: () => {
-            console.log('Confirm Cancel');
-          }
-        }, {
-          text: 'Confirmar',
-          handler: (categoria) => {
-            console.log('Confirm adicionar', categoria);
-            this.presentAlertPromptAddDespesas(categoria)
-          }
-        }
-      ]
-    });
-
-    await alert.present();
-  }
-
-  async presentAlertPromptAddDespesas(categoria) {
-    const alert = await this.alertController.create({
-      cssClass: 'my-custom-class',
-      header: 'Despesa',
-      subHeader: categoria,
-      inputs: [
-        {
-          name: 'valor',
-          type: 'number',
-          id:'tipo3',
-          placeholder: 'Valor(R$)',
-          cssClass: 'specialClass',
-          attributes: {
-            maxlength: 4,
-            inputmode: 'decimal'
-          }
-        }
-      ],
-      buttons: [
-        {
-          text: 'Cancel',
-          role: 'cancelar',
-          cssClass: 'secondary',
-          handler: () => {
-            console.log('Confirm Cancel');
-          }
-        }, {
-          text: 'Confirmar',
-          handler: (res) => {
-            console.log('Confirm Ok', res, categoria);
-            let despesa = {
-              categoria:categoria,
-              valor:res.valor
-            }
-            this.addDespesas(despesa)
-          }
-        }
-      ]
-    });
-
-    await alert.present();
-  }
-
-  async presentAlertAddPromptReceita(categoria) {
-    const alert = await this.alertController.create({
-      cssClass: 'my-custom-class',
-      header: 'Receita',
-      inputs: [
-        {
-          name:'descricao',
-          type:'text',
-          placeholder:'Descrição'
-        },
-        {
-          name: 'valor',
-          type: 'number',
-          id:'tipo3',
-          placeholder: 'Valor(R$)',
-          cssClass: 'specialClass',
-          attributes: {
-            maxlength: 4,
-            inputmode: 'decimal'
-          }
-        }
-      ],
-      buttons: [
-        {
-          text: 'Cancel',
-          role: 'cancelar',
-          cssClass: 'secondary',
-          handler: () => {
-            console.log('Confirm Cancel');
-          }
-        }, {
-          text: 'Confirmar',
-          handler: (rec) => {
-            console.log('Confirm Ok', rec);
-            this.addReceita(rec)
-          }
-        }
-      ]
-    });
-
-    await alert.present();
+    
   }
 
   addReceita(receita){
     this.financeiro.setReceitas(receita)
-  }
-
-  addDespesas(despesa){
-    //this.financeiro.setDespesas2(despesa)
   }
 
   getFinanceiro(){
@@ -283,6 +136,7 @@ export class Tab3Page implements OnInit {
     let supl:any[] = []
     var julho = []
     this.financeiro.getBalanco().then((res:any[]) => {
+      console.log(res)
       var balancoFormatado = res.map(function(obj) {
         return Object.keys(obj).map(function(chave) {
           return obj[chave];
@@ -299,11 +153,8 @@ export class Tab3Page implements OnInit {
             supl[i] = parseFloat(supl[i]) + parseFloat(balancoFormatado[0][i].suplementos)
             outr[i] = parseFloat(outr[i]) + parseFloat(balancoFormatado[0][i].outros)
             let jul = trans[i] + supl[i] + outr[i]
-            
             julho.push({jul})
-            console.log(jul)
             
-
           case 'agosto':
             console.log('agosto')
             trans[i] = trans[i] + parseFloat(balancoFormatado[0][i].transporte)
@@ -312,44 +163,43 @@ export class Tab3Page implements OnInit {
             let ago = trans[i] + supl[i] + outr[i]
             const agosto = []
             agosto.push({ago})
-            console.log(agosto)
-              
         
           default:
             break;
         }
       }
-
       this.balancoChart.push(julho)
-    
-      
     })
     
   }
 
   getBalanco2(){
-    
     this.financeiro.getBalanco2().then((res:any[])=>{
       console.log(res)
+      this.iniciarChart(res)
       this.balancoGeral = res
-      this.balancoGeral.forEach(item => {
-        this.receitas.push(item.receita)
-        this.despesas.push(item.despesa)
-        this.lucro.push(item.lucro)
-      })
-      this.totalReceita = this.calcAcumulado(this.receitas)
-      this.totalDespesa = this.calcAcumulado(this.despesas)
-      this.totalLucro = this.calcAcumulado(this.lucro)
       this.presentLoading()
+    
     })
+  }
+
+  iniciarChart(arr){
+    var newArr = []
+    arr.forEach(e => {
+      console.log(e)
+      this.receitas.push(parseFloat(e.receita))
+      this.despesas.push(parseFloat(e.despesa))
+      this.lucro.push(parseFloat(e.lucro))
+      this.periodo.push(e.mes)
+    });
   }
 
   editBalanco(item){
     console.log(item)
-    this.financeiro.setBalanco(item)
+    this.financeiro.setBalanco(item).then(()=>{this.getBalanco2()})
   }
 
-  async alertBalanco(item) {
+  async alertEditBalanco(item) {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
       header: 'Despesa',
@@ -394,7 +244,8 @@ export class Tab3Page implements OnInit {
             console.log('Confirm Ok', res);
             let balanco = {
               receita:res.receita,
-              despesa:res.despesa
+              despesa:res.despesa,
+              mes:item.mes
             }
             this.editBalanco(balanco)
           }
@@ -416,19 +267,23 @@ export class Tab3Page implements OnInit {
         {
           name: 'receita',
           type: 'number',
-          id:'tipo3',
+          id:'receita',
           placeholder: 'Receita(R$)',
           label:'Receita',
           cssClass: 'specialClass',
+          disabled: true,
           attributes: {
+            inputmode: 'decimal',
+            minlength: 1,
             maxlength: 4,
-            inputmode: 'decimal'
+            autocomplete: 'on',
+            disabled: false
           }
         },
         {
           name: 'despesa',
           type: 'number',
-          id:'tipo3',
+          id:'despesa',
           placeholder: 'Despesa(R$)',
           label:'Despesa',
           cssClass: 'specialClass',
@@ -456,6 +311,7 @@ export class Tab3Page implements OnInit {
               mes:mes,
               mesRef:mesRef
             }
+            console.log(balanco)
             this.addBalanco(balanco)
           }
         }
@@ -537,64 +393,64 @@ export class Tab3Page implements OnInit {
           value: '03'
         },
         {
-          name: 'radio1',
-          id: 'radio1',
+          name: 'radio4',
+          id: 'radio4',
           type: 'radio',
           label: 'Abril',
           value: '04',
         },
         {
-          name: 'radio2',
-          id: 'radio2',
+          name: 'radio5',
+          id: 'radio5',
           type: 'radio',
           label: 'Maio',
           value: '05'
         },
         {
-          name: 'radio3',
-          id: 'radio3',
+          name: 'radio6',
+          id: 'radio6',
           type: 'radio',
           label: 'Junho',
           value: '06'
         },
         {
-          name: 'radio1',
-          id: 'radio1',
+          name: 'radio7',
+          id: 'radio7',
           type: 'radio',
           label: 'Julho',
           value: '07',
         },
         {
-          name: 'radio2',
-          id: 'radio2',
+          name: 'radio8',
+          id: 'radio8',
           type: 'radio',
           label: 'Agosto',
-          value: '07'
+          value: '08'
         },
         {
-          name: 'radio3',
-          id: 'radio3',
+          name: 'radio9',
+          id: 'radio9',
           type: 'radio',
           label: 'Setembro',
           value: '09'
         },
         {
-          name: 'radio1',
-          id: 'radio1',
+          name: 'radio10',
+          id: 'radio10',
           type: 'radio',
           label: 'Outubro',
           value: '10',
         },
         {
-          name: 'radio2',
-          id: 'radio2',
+          name: 'radio11',
+          id: 'radio11',
           type: 'radio',
           label: 'Novembro',
           value: '11'
         },
         {
-          name: 'Dezembro',
-          id: 'radio3',
+          name: 'radio12',
+          id: 'radio12',
           type: 'radio',
           label: 'Dezembro',
           value: '12'
@@ -664,7 +520,11 @@ export class Tab3Page implements OnInit {
   }
 
   addBalanco(balanco){
-    this.financeiro.addBalanco(balanco)
+    this.financeiro.addBalanco(balanco).then(()=>{
+      console.log('addBalanco', this.balancoGeral)
+      this.getBalanco2()
+    })
+    
   }
 
   calcAcumulado(despesa){
@@ -675,43 +535,40 @@ export class Tab3Page implements OnInit {
     return total
   }
 
-  getBalanco3(){
-    console.log(this.balanco)
-    function agruparPor(objetoArray, propriedade) {
-      return objetoArray.reduce(function (acc, obj) {
-        let key = obj[propriedade];
-        if (!acc[key]) {
-          acc[key] = [];
-        }
-        acc[key].push(obj);
-        return acc;
-      }, {});
-    }
-
-    const grupodePessoas = agruparPor(this.balanco, 'mes');
-    console.log(grupodePessoas)
-    const arrayBancoFormatado = this.formatarBalanco(grupodePessoas)
-    console.log(arrayBancoFormatado)
-    //this.calcularBalanco(arrayBancoFormatado)
-  }
-
   formatarBalanco(balanco){
     let arrayMes = []
     arrayMes.push(balanco.junho, balanco.julho, balanco.agosto)
     return arrayMes
   }
+
   
-  editarBalanco(mes){
-
-  }
-
-
-  async addDespesasModal(){
+  async openBalancoModal(){
     const modal = await this.modalController.create({
-      component: AddDespesasModalPage,
+      component: BalancoModalPage,
       cssClass: 'my-custom-class',
+      showBackdrop:false,
+      componentProps: {
+        'id': 'teste',
+      }
+    })
+    modal.onDidDismiss().then(() => {
+      // Run check updates when modal returns
+      this.checkForUpdates();
     });
     return await modal.present();
+  }
+
+  checkForUpdates(){
+    this.balancoGeral = []
+    this.receitas = []
+    this.despesas = []
+    this.lucro = []
+    this.periodo = []
+    this.getBalanco2()
+    // this.financeiro.getBalanco2().then((res:any[])=>{
+    //   this.balancoGeral = res
+    //   this.presentLoading()
+    // })
   }
 
   async presentLoading() {
@@ -720,114 +577,21 @@ export class Tab3Page implements OnInit {
       duration: 3000
     });
     await loading.present().then(() => {
-      //this.showDoughnutLucroMes()
+      // this.totalReceita = this.calcAcumulado(this.receitas)
+      // this.totalDespesa = this.calcAcumulado(this.despesas)
+      // this.totalLucro = this.calcAcumulado(this.lucro)
+      // this.balancoGeral.forEach(item => {
+      //   this.receitas.push(item.receita)
+      //   this.despesas.push(item.despesa)
+      //   this.lucro.push(item.lucro)
+      //   this.periodo.push(item.mes)
+      // })
       this.showBarBalanco()
-      //this.showPieDespesasDoMes()
-      //this.showLineLucro()
-      //this.showLineDespesas()
     })
   }
-//   showLineLucro(){
-//     this.lineChartLucro = new Chart(this.chartLineLucro.nativeElement, {
-//       type: 'line',
-//       data: {
-//           labels: ['jul', 'ago'],
-//           //labels: this.datas,
-//           datasets: [
-//                 {
-//                   label: "Receita",
-//                   fill: false,
-//                   lineTension: 0.1,
-//                   backgroundColor: "rgba(75,192,192,0.4)",
-//                   borderColor: "rgba(182, 46, 235, 1.0)",
-//                   borderCapStyle: 'butt',
-//                   borderDash: [],
-//                   borderDashOffset: 0.0,
-//                   borderJoinStyle: 'miter',
-//                   pointBorderColor: "rgba(75,192,192,1)",
-//                   pointBackgroundColor: "#fff",
-//                   pointBorderWidth: 1,
-//                   pointHoverRadius: 5,
-//                   pointHoverBackgroundColor: "rgba(35,132,122,2)",
-//                   pointHoverBorderColor: "rgba(220,220,220,1)",
-//                   pointHoverBorderWidth: 2,
-//                   pointRadius: 1,
-//                   pointHitRadius: 10,
-//                   //data: this.arrayTristeza,
-//                   data: this.receitas,
-//                   spanGaps: false,
-//               },
-//               {
-//                 label: "Despesas",
-//                 fill: false,
-//                 lineTension: 0.1,
-//                 backgroundColor: "rgba(231, 83, 50, 1.0)",
-//                 //borderColor: "rgba(75,192,192,1)",
-//                 borderCapStyle: 'butt',
-//                 borderDash: [],
-//                 borderDashOffset: 0.0,
-//                 borderJoinStyle: 'miter',
-//                 //pointBorderColor: "rgba(75,192,192,1)",
-//                 //pointBackgroundColor: "#fff",
-//                 pointBorderWidth: 1,
-//                 pointHoverRadius: 5,
-//                 //pointHoverBackgroundColor: "rgba(35,132,122,2)",
-//                 //pointHoverBorderColor: "rgba(220,220,220,1)",
-//                 pointHoverBorderWidth: 2,
-//                 pointRadius: 1,
-//                 pointHitRadius: 10,
-//                 //data: this.arrayTristeza,
-//                 data: this.despesas,
-//                 spanGaps: false,
-//             },
-//             {
-//               label: "Lucro",
-//               fill: false,
-//               lineTension: 0.1,
-//               backgroundColor: "rgba(0, 0, 0, 1.0)",
-//               borderColor: "rgba(75,192,192,1)",
-//               borderCapStyle: 'butt',
-//               borderDash: [],
-//               borderDashOffset: 0.0,
-//               borderJoinStyle: 'miter',
-//               pointBorderColor: "rgba(75,192,192,1)",
-//               pointBackgroundColor: "#fff",
-//               pointBorderWidth: 1,
-//               pointHoverRadius: 5,
-//               pointHoverBackgroundColor: "rgba(35,132,122,2)",
-//               pointHoverBorderColor: "rgba(220,220,220,1)",
-//               pointHoverBorderWidth: 2,
-//               pointRadius: 1,
-//               pointHitRadius: 10,
-//               //data: this.arrayTristeza,
-//               data: this.lucro,
-//               spanGaps: false,
-//           },
-//           ]
-//       },
-//       options: {
-// 				scales: {
-// 					xAxes: [{
-	
-// 						ticks: {
-// 							source: 'labels'
-// 						}
-// 					}],
-// 					yAxes: [{
-// 						ticks: {
-// 							userCallback: function(tick) {
-// 								return 'R$' + tick.toString() + ',00';
-// 							}
-// 						},
 
-// 					}]
-// 				}
-// 			}
-
-//   });
-// }
   showDoughnutLucroMes(){
-  this.doughnuLucroMes = new Chart(this.chartDoughnutLucroMes.nativeElement, {
+    this.doughnuLucroMes = new Chart(this.chartDoughnutLucroMes.nativeElement, {
     type: 'doughnut',
     data: {
       datasets: [{
@@ -863,42 +627,10 @@ export class Tab3Page implements OnInit {
     }
   });
 }
-//   showPieDespesasDoMes(){
-//   this.pieChartDespesasDoMes = new Chart(this.chartPieDespesasDoMes.nativeElement, {
-//     type: 'pie',
-//     data: {
-//       datasets: [{
-//         data: [8,4,6,8,4,5,3
-//         ],
-//         backgroundColor: [
-//           'rgba(156, 195, 20, 1.0)',
-//           'rgba(176, 71, 33, 1.0)',
-//           'rgba(182, 46, 235, 1.0)',
-//           'rgba(47, 198, 67, 1.0)',
-//           'rgba(81, 46, 34, 1.0)',
-//           'rgba(255, 159, 64, 0.2)',
-//           'rgba(255, 25, 0, 0.1)'
-//       ],
-//         label: 'Dataset 1'
-//       }],
-//       labels: [
-//         'energia',
-//         'esgoto',
-//         'aluguel',
-//         'agua',
-//         'outros',
-//         'limpeza',
-//         'RH'
-//       ]
-//     },
-//     options: {
-//       responsive: true
-//     }
-//   });
-// }
+
 
   showLineDespesas(){
-  this.lineChartDespesas = new Chart(this.lineDespesas.nativeElement, {
+    this.lineChartDespesas = new Chart(this.lineDespesas.nativeElement, {
 
     type: 'line',
     data: {
@@ -985,7 +717,7 @@ showBarBalanco(){
   this.barChartBalanco = new Chart(this.barBalanco.nativeElement, {
     type: 'bar',
     data: {
-        labels: ['Jan', 'Fev'],
+        labels: this.periodo,
         datasets: [
             {
               label: "Despesas",
@@ -1000,10 +732,6 @@ showBarBalanco(){
         ]
     },
     options: {
-      title: {
-        display: false,
-        text: 'Chart.js Bar Chart - Stacked'
-      },
       tooltips: {
         mode: 'index',
         intersect: false
